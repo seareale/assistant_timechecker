@@ -116,52 +116,51 @@ def read_data(txt_path):
 def day_run(TODAY, today_schedule, id, pw):
     for split, click_times in today_schedule.items():
         row_idx = 0 if split == 0 else 0 if len(today_schedule) == 1 else 1
-    input_text = click_times[1]
-    click_times = click_times[0]
-    for idx, click_time in enumerate(click_times):
-        print(row_idx, click_time, input_text, end="  ")
-        click_time = datetime.strptime(TODAY + " " + click_time, "%Y-%m-%d %H:%M:%S")
-        clicked = True
-        while clicked:
-            TOTIME = datetime.strptime(
-                TODAY + " " + datetime.today().strftime("%H:%M") + ":00", "%Y-%m-%d %H:%M:%S"
-            )
-            if TOTIME == click_time:
-                driver = login(id, pw)
-                btn_list = get_today_btn_list(driver)
-                txt_list = get_today_text_list(driver)
+        input_text = click_times[1]
+        click_times = click_times[0]
+        for idx, click_time in enumerate(click_times):
+            print(row_idx, click_time, input_text, end="  ")
+            click_time = datetime.strptime(TODAY + " " + click_time, "%Y-%m-%d %H:%M:%S")
+            clicked = True
+            while clicked:
+                TOTIME = datetime.strptime(
+                    TODAY + " " + datetime.today().strftime("%H:%M") + ":00", "%Y-%m-%d %H:%M:%S"
+                )
+                if TOTIME == click_time:
+                    driver = login(id, pw)
+                    btn_list = get_today_btn_list(driver)
+                    txt_list = get_today_text_list(driver)
 
-                if row_idx == len(btn_list) - 2:
-                    row_idx += 1
+                    if row_idx == len(btn_list) - 2:
+                        row_idx += 1
 
-                if idx == 1:
-                    txt_list[row_idx].send_keys(input_text)
-                btn_list[row_idx][idx].click()
+                    if idx == 1:
+                        txt_list[row_idx].send_keys(input_text)
+                    btn_list[row_idx][idx].click()
 
-                print("Click!", end="   ")
+                    print("Click!", end="   ")
+                    time.sleep(2)
+                    driver.find_element(By.CSS_SELECTOR, "input[title='예']").click()
+                    driver.quit()
+                    clicked = False
+                elif TOTIME > click_time:
+                    print("Skip!", end="   ")
+                    clicked = False
+                else:
+                    pass
+        if split == 0 and len(today_schedule) == 2:
+            driver = login(id, pw)
+            btn_list = get_today_btn_list(driver)
+            if len(btn_list) >= len(today_schedule):
+                print("Already!", end="   ")
+                pass
+            else:
+                add_line(driver)
+                print("Add!", end="   ")
                 time.sleep(2)
                 driver.find_element(By.CSS_SELECTOR, "input[title='예']").click()
-                driver.quit()
-                clicked = False
-            elif TOTIME > click_time:
-                print("Skip!", end="   ")
-                clicked = False
-            else:
-                pass
-
-    if split == 0 and len(today_schedule) == 2:
-        driver = login(id, pw)
-        btn_list = get_today_btn_list(driver)
-        if len(btn_list) >= len(today_schedule):
-            print("Already!", end="   ")
-            pass
-        else:
-            add_line(driver)
-            print("Add!", end="   ")
-            time.sleep(2)
-            driver.find_element(By.CSS_SELECTOR, "input[title='예']").click()
-        driver.quit()
-    print()
+            driver.quit()
+        print()
 
 
 if __name__ == "__main__":
