@@ -22,6 +22,7 @@ def login(id, pw):
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "mainSnb_title_level2_acc_MNU0010728"))
     )
+    time.sleep(2)
     driver.find_element(By.ID, "mainSnb_title_level2_acc_MNU0010728").click()
     time.sleep(2)
     driver.find_element(By.ID, "mainSnb_level3_snbList_button_MNU0010815").click()
