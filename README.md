@@ -7,7 +7,6 @@ Download the suitable ChromeDriver. [Link](https://chromedriver.chromium.org/)
 ## 2. Data
 Prepare `data.txt` as below.
 ```txt
-{ID} {PW}
 {YYYY-MM-DD} {HH:MM:SS} {HH:MM:SS} {TASK}
 {YYYY-MM-DD} {HH:MM:SS} {HH:MM:SS} {TASK}
 ...
@@ -18,5 +17,5 @@ Prepare `data.txt` as below.
 # Before run, check the files below
 # chromedriver.exe, data.txt, run.py
 
-$ python3 run.py
+$ python3 run.py {ID} {PW}
 ```
