@@ -1,4 +1,4 @@
-# assistant_timechecker
+# knu_assistant_timechecker
 assistant_timechecker
 
 ## 1. Env
