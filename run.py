@@ -1,3 +1,4 @@
+import sys
 import time
 from datetime import datetime
 
@@ -96,8 +97,8 @@ def read_data(txt_path):
     return_dict = {}
 
     with open(txt_path, "r", encoding="UTF8") as f:
-        login_info = f.readline().strip("\n")
-        return_dict["login"] = login_info.split(" ")
+        # login_info = f.readline().strip("\n")
+        # return_dict["login"] = login_info.split(" ")
 
         lines = f.readlines()
         for line in lines:
@@ -164,8 +165,13 @@ def day_run(TODAY, today_schedule, id, pw):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Input ID and PW")
+        sys.exit()
+    else:
+        id, pw = sys.argv[1:3]
+
     data_dict = read_data("data.txt")
-    id, pw = data_dict["login"]
 
     TODAY = datetime.today().strftime("%Y-%m-%d")
     today_schedule = data_dict[TODAY]
