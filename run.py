@@ -136,12 +136,13 @@ def day_run(TODAY, today_schedule, id, pw):
                         row_idx += 1
 
                     if idx == 1:
-                        txt_list[row_idx].send_keys(input_text)
+                        txt_list[row_idx].find_element(By.TAG_NAME, "input").send_keys(input_text)
                     btn_list[row_idx][idx].click()
 
                     print("Click!", end="   ")
                     time.sleep(2)
                     driver.find_element(By.CSS_SELECTOR, "input[title='예']").click()
+                    time.sleep(2)
                     driver.quit()
                     clicked = False
                 elif TOTIME > click_time:
@@ -154,12 +155,12 @@ def day_run(TODAY, today_schedule, id, pw):
             btn_list = get_today_btn_list(driver)
             if len(btn_list) >= len(today_schedule):
                 print("Already!", end="   ")
-                pass
             else:
                 add_line(driver)
-                print("Add!", end="   ")
                 time.sleep(2)
-                driver.find_element(By.CSS_SELECTOR, "input[title='예']").click()
+                driver.find_element(By.CSS_SELECTOR, "input[title='확인']").click()
+                time.sleep(2)
+                print("Add!", end="   ")
             driver.quit()
         print()
 
